@@ -1,0 +1,14 @@
+.box{
+    min-height: 2em;
+    min-width: 2em;
+    border-radius: .5em;
+    background-color: darkgrey;
+}
+
+.box:hover{
+    background-color: #9d9d9d;
+}
+
+.box-open{
+
+}
