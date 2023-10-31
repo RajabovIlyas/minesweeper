@@ -1,21 +1,27 @@
 import './box.styles.css';
 import { FC } from 'react';
-import { CellModel } from '../../models/cell.model.ts';
+import { CellModel } from 'models/cell.model.ts';
+import { Matrix } from 'models/matrix.model.ts';
 
 interface BoxProps extends Omit<CellModel, 'id'> {
-  onCheckedBomb: (x: number, y: number) => void;
+  onOpenBox: (props: Matrix) => void;
   x: number;
   y: number;
+  gameOver: boolean;
 }
 
-const Box: FC<BoxProps> = ({ show, bombNumber, flag, onCheckedBomb, x, y }) => {
+const Box: FC<BoxProps> = ({ gameOver, show, bombNumber, bomb, flag, onOpenBox, x, y }) => {
 
-  const checkedBomb = () => {
-    onCheckedBomb(x, y);
+  const openBox = () => {
+    onOpenBox({ x, y });
   };
 
+  if(!gameOver && bomb){
+    return (<div className='box box-bomb'><img className='img-bomb' src='/minesweeper.svg' alt='bomb'/></div>);
+  }
+
   if (show) {
-    const boxStyle = bombNumber ? `box-open box-open-color-${bombNumber}` : 'box-open';
+    const boxStyle = bombNumber ? `box box-open box-open-color-${bombNumber}` : 'box box-open';
     return <div className={boxStyle}>{bombNumber}</div>;
   }
 
@@ -25,7 +31,7 @@ const Box: FC<BoxProps> = ({ show, bombNumber, flag, onCheckedBomb, x, y }) => {
 
 
   return (
-    <div className='box' onClick={checkedBomb}></div>
+    <div className='box box-close' onClick={openBox}></div>
   );
 };
 
