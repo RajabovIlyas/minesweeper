@@ -1,3 +1,11 @@
+@font-face {
+    font-family: "DS-DIGI";
+    src: url("/public/fonts/DS-DIGI.ttf") format("truetype");
+    font-style: normal;
+    font-weight: normal;
+}
+
+
 
 .d-flex {
     display: flex !important
@@ -668,4 +676,13 @@
 
 .text-align-center{
     text-align: center;
+}
+
+body{
+    -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none;   /* Chrome/Safari/Opera */
+    -khtml-user-select: none;    /* Konqueror */
+    -moz-user-select: none;      /* Firefox */
+    -ms-user-select: none;       /* Internet Explorer/Edge */
+    user-select: none;
 }

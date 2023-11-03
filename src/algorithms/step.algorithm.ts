@@ -11,7 +11,7 @@ interface Props extends Matrix {
 
 export const openBox = ({ gameFields, x, y }: Props) => {
 
-  if (gameFields[x]?.[y]?.show) {
+  if (gameFields[x]?.[y]?.show || gameFields[x]?.[y]?.flag) {
     return gameFields;
   }
 
@@ -29,12 +29,7 @@ export const openBox = ({ gameFields, x, y }: Props) => {
 
   for (let xCheck = x <= ZERO ? x : x - ONE; xCheck <= (x >= CELLS_HEIGHT - ONE ? x : x + ONE); xCheck++) {
     for (let yCheck = y <= ZERO ? y : y - ONE; yCheck <= (y >= CELLS_WIDE - ONE ? y : y + ONE); yCheck++) {
-      if ((!gameFields[xCheck]?.[yCheck]?.bombNumber && !gameFields?.[xCheck]?.[yCheck]?.show)) {
-        gameFields = openBox({ gameFields, x: xCheck, y: yCheck });
-      }
-      if (gameFields[xCheck]?.[yCheck]?.bombNumber) {
-        gameFields[xCheck][yCheck].show = true;
-      }
+      gameFields = openBox({ gameFields, x: xCheck, y: yCheck });
     }
   }
 

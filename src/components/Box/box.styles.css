@@ -15,6 +15,7 @@
 
 .box-close:hover{
     background-color: #475569;
+    cursor: pointer;
 }
 
 .box-open{
