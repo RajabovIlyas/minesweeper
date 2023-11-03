@@ -17,7 +17,7 @@ export const useGameMapHook = () => {
   const [gameFields, setGameFields] = useState<CellModel[][]>([]);
 
   useEffect(() => {
-    startGame();
+    newGameFields();
   }, []);
 
   useEffect(() => {
@@ -31,17 +31,21 @@ export const useGameMapHook = () => {
     }
   }, [checkedBombTrue]);
 
-  const startGame = () => {
-    setFirstStep(true);
-    setGameStatus(GameStatus.PROCESS);
-    setCheckedBomb(COUNT_BOMBS);
-    setCheckedBombTrue(COUNT_BOMBS);
+  const newGameFields = () => {
     setGameFields(
       [...new Array(CELLS_HEIGHT)].map(() =>
         [...new Array(CELLS_WIDE)].map(() => ({
           ...DEFAULT_FIELD,
           id: uuidV4()
         }))));
+    startGame();
+  }
+
+  const startGame = () => {
+    setFirstStep(true);
+    setGameStatus(GameStatus.PROCESS);
+    setCheckedBomb(COUNT_BOMBS);
+    setCheckedBombTrue(COUNT_BOMBS);
   };
 
   const onOpenBox = ({ x, y }: Matrix) => {
@@ -77,7 +81,13 @@ export const useGameMapHook = () => {
   };
 
   const onRestart = () => {
-    startGame();
+    startGame()
+    setGameFields(
+      gameFields.map((columns) =>
+        columns.map((field) => ({
+          ...field,
+          ...DEFAULT_FIELD,
+        }))));
   };
 
   const closeContextMenu = (event: MouseEvent) => {

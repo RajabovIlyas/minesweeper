@@ -15,39 +15,32 @@ interface BoxProps extends Omit<CellModel, 'id'> {
 const Box: FC<BoxProps> = ({ gameStatus, show, bombNumber, bomb, flag, onOpenBox, onSetFlag, x, y }) => {
 
   const openBox = () => {
-    if(gameStatus !== GameStatus.PROCESS){
+    if (gameStatus !== GameStatus.PROCESS || show) {
       return;
     }
     onOpenBox({ x, y });
   };
 
   const setFlag = (event: MouseEvent) => {
-    if(gameStatus !== GameStatus.PROCESS){
+    if (show || gameStatus !== GameStatus.PROCESS) {
       return;
     }
-    onSetFlag({x, y})
+
+    onSetFlag({ x, y });
     event.preventDefault();
-    return false
+    return false;
   };
 
-  if(gameStatus === GameStatus.FALL){
-    if(bomb){
-      return (<div className='box box-bomb'><img className='img-bomb' src='/minesweeper.svg' alt='bomb'/></div>);
-    }
-  }
+  const showBomb = !(gameStatus === GameStatus.FALL && bomb);
 
-  if (show) {
-    const boxStyle = bombNumber ? `box box-open box-open-color-${bombNumber}` : 'box box-open';
-    return <div className={boxStyle}>{bombNumber}</div>;
-  }
-
-  if (flag) {
-    return <div className='box box-bomb' onContextMenu={setFlag}><img className='img-bomb' src='/flag.svg' alt="flag"/></div>;
-  }
-
+  const boxStyle = show ? (bombNumber ? `box box-open box-open-color-${bombNumber}` : 'box box-open') : 'box box-close';
 
   return (
-    <div className='box box-close' onClick={openBox} onContextMenu={setFlag}></div>
+    <div className={boxStyle} onClick={openBox} onContextMenu={setFlag}>
+      <img className='img-bomb' src='/minesweeper.svg' alt='bomb' hidden={showBomb || flag}/>
+      <img className='img-bomb' src='/flag.svg' alt='flag' hidden={!flag} />
+      {show && bombNumber}
+    </div>
   );
 };
 

@@ -2,13 +2,7 @@ import './game-map.styles.css';
 import { FC } from 'react';
 import Box from 'components/Box/Box.tsx';
 import { useGameMapHook } from './game-map.hook.ts';
-
-const SHOW_EMOJI = {
-  PROCESS: <img key='PROCESS' className='img-emoji' src='/smile.svg' alt='smile' />,
-  FALL: <img key='FALL' className='img-emoji' src='/cry.svg' alt='sad' />,
-  WIN: <img key='WIN' className='img-emoji' src='/cool-emoji.svg' alt='win' />
-};
-
+import PlayButton from '../PlayButton/PlayButton.tsx';
 
 const GameMap: FC = () => {
   const {
@@ -27,11 +21,7 @@ const GameMap: FC = () => {
          onContextMenu={closeContextMenu}>
       <div className='d-flex gap-3 justify-content-center align-items-center my-1'>
         <h4 className='watch-text'>{checkedBomb}</h4>
-        <div>
-          <button onClick={onRestart}>
-            {SHOW_EMOJI[gameStatus]}
-          </button>
-        </div>
+        <PlayButton gameStatus={gameStatus} onRestart={onRestart} />
         <h4 className='watch-text'>{checkedBomb}</h4>
       </div>
       <div className='d-flex-column gap-1'>

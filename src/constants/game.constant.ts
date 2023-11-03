@@ -8,5 +8,6 @@ export const CELLS_HEIGHT = 15;
 export const DEFAULT_FIELD: Omit<CellModel, 'id'> = {
   show: false,
   bomb: false,
-  flag: false
+  flag: false,
+  bombNumber: null
 }
