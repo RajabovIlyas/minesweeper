@@ -1,31 +1,46 @@
 import './box.styles.css';
-import { FC } from 'react';
-import { CellModel } from '../../models/cell.model.ts';
+import { FC, MouseEvent } from 'react';
+import { CellModel } from 'models/cell.model.ts';
+import { Matrix } from 'models/matrix.model.ts';
+import { GameStatus } from '../../enums/game-status.enum.ts';
 
 interface BoxProps extends Omit<CellModel, 'id'> {
-  onCheckedBomb: (x: number, y: number) => void;
+  onOpenBox: (props: Matrix) => void;
+  onSetFlag: (props: Matrix) => void;
   x: number;
   y: number;
+  gameStatus: GameStatus;
 }
 
-const Box: FC<BoxProps> = ({ show, bombNumber, flag, onCheckedBomb, x, y }) => {
+const Box: FC<BoxProps> = ({ gameStatus, show, bombNumber, bomb, flag, onOpenBox, onSetFlag, x, y }) => {
 
-  const checkedBomb = () => {
-    onCheckedBomb(x, y);
+  const openBox = () => {
+    if (gameStatus !== GameStatus.PROCESS || show) {
+      return;
+    }
+    onOpenBox({ x, y });
   };
 
-  if (show) {
-    const boxStyle = bombNumber ? `box-open box-open-color-${bombNumber}` : 'box-open';
-    return <div className={boxStyle}>{bombNumber}</div>;
-  }
+  const setFlag = (event: MouseEvent) => {
+    if (show || gameStatus !== GameStatus.PROCESS) {
+      return;
+    }
 
-  if (flag) {
-    return <div className='box'><img className='box-img'/></div>;
-  }
+    onSetFlag({ x, y });
+    event.preventDefault();
+    return false;
+  };
 
+  const showBomb = !(gameStatus === GameStatus.FALL && bomb);
+
+  const boxStyle = show ? (bombNumber ? `box box-open box-open-color-${bombNumber}` : 'box box-open') : 'box box-close';
 
   return (
-    <div className='box' onClick={checkedBomb}></div>
+    <div className={boxStyle} onClick={openBox} onContextMenu={setFlag}>
+      <img className='img-bomb' src='/minesweeper.svg' alt='bomb' hidden={showBomb || flag}/>
+      <img className='img-bomb' src='/flag.svg' alt='flag' hidden={!flag} />
+      {show && bombNumber}
+    </div>
   );
 };
 
