@@ -1,4 +1,3 @@
-import './box.styles.css';
 import { FC, MouseEvent } from 'react';
 import { CellModel } from 'models/cell.model.ts';
 import { Matrix } from 'models/matrix.model.ts';
@@ -33,13 +32,17 @@ const Box: FC<BoxProps> = ({ gameStatus, show, bombNumber, bomb, flag, onOpenBox
 
   const showBomb = !(gameStatus === GameStatus.FALL && bomb);
 
-  const boxStyle = show ? (bombNumber ? `box box-open box-open-color-${bombNumber}` : 'box box-open') : 'box box-close';
+  const boxStyle = `box text-red tc-${bombNumber} ${show
+    ? `bg-open`
+    : `bg-close ${flag || gameStatus === GameStatus.FALL
+      ? ''
+      : 'hover:bg-close_hover'}`}`;
 
   return (
     <div className={boxStyle} onClick={openBox} onContextMenu={setFlag}>
-      <img className='img-bomb' src='/minesweeper.svg' alt='bomb' hidden={showBomb || flag}/>
-      <img className='img-bomb' src='/flag.svg' alt='flag' hidden={!flag} />
-      {show && bombNumber}
+      <img className='box-img' src='/minesweeper.svg' alt='bomb' hidden={showBomb || flag} />
+      <img className='box-img' src='/flag.svg' alt='flag' hidden={!flag} />
+      {show &&<p itemProp={`${bombNumber}`} >{bombNumber}</p>}
     </div>
   );
 };

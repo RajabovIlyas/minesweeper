@@ -1,0 +1,58 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+@layer base {
+    @font-face {
+        font-family: DS-DIGI;
+        font-weight: normal;
+        src: url(/public/fonts/DS-DIGI.ttf) format("woff");
+    }
+    p {
+        @apply font-extrabold font-mono
+    }
+    h4 {
+        font-family: DS-DIGI, sans-serif;
+        font-size: 32px;
+        margin: 0
+    }
+
+    p[itemProp='1']{
+        @apply text-ct1
+    }
+    p[itemProp='2']{
+        @apply text-ct2
+    }
+    p[itemProp='3']{
+        @apply text-ct3
+    }
+    p[itemProp='4']{
+        @apply text-ct4
+    }
+    p[itemProp='5']{
+        @apply text-ct5
+    }
+    p[itemProp='6']{
+        @apply text-ct6
+    }
+    p[itemProp='7']{
+        @apply text-ct7
+    }
+    p[itemProp='8']{
+        @apply text-ct8
+    }
+}
+
+@layer components {
+    .box {
+        @apply flex justify-center items-center rounded-lg w-7 h-7;
+    }
+    .box-img {
+        @apply w-5 h-5
+    }
+    .img-emoji {
+        width: 25px;
+        height: 25px;
+    }
+}

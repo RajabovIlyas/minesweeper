@@ -1,4 +1,3 @@
-import './app.styles.css';
 import { FC } from 'react';
 import GameMap from './components/GameMap/GameMap.tsx';
 
