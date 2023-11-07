@@ -9,7 +9,7 @@ import { copyGameFields } from '../../helpers/copy-fields.ts';
 import { GameStatus } from '../../enums/game-status.enum.ts';
 
 export const useGameMapHook = () => {
-  const [firstStep, setFirstStep] = useState(true);
+  const [firstStep, setFirstStep] = useState<boolean>(true);
   const [gameStatus, setGameStatus] = useState<GameStatus>(GameStatus.PROCESS);
   const [checkedBomb, setCheckedBomb] = useState(COUNT_BOMBS);
   const [checkedBombTrue, setCheckedBombTrue] = useState(COUNT_BOMBS);
@@ -26,8 +26,8 @@ export const useGameMapHook = () => {
       setGameFields((gameFields) =>
         gameFields.map((column) =>
           column.map((field) => ({
-            ...field, show: !field.bomb,
-          }))))
+            ...field, show: !field.bomb
+          }))));
     }
   }, [checkedBombTrue]);
 
@@ -39,7 +39,7 @@ export const useGameMapHook = () => {
           id: uuidV4()
         }))));
     startGame();
-  }
+  };
 
   const startGame = () => {
     setFirstStep(true);
@@ -56,10 +56,10 @@ export const useGameMapHook = () => {
         return;
       }
 
-      setGameFields(stepAlgorithm({ gameFields, x, y }));
-    } catch (e) {
-      setGameStatus(GameStatus.FALL);
-    }
+        setGameFields(stepAlgorithm({ gameFields, x, y }));
+      } catch (e) {
+        setGameStatus(GameStatus.FALL);
+      }
   };
 
   const onSetFlag = ({ x, y }: Matrix) => {
@@ -68,8 +68,8 @@ export const useGameMapHook = () => {
     }
 
     setCheckedBombTrue((checkedBombTrue) => {
-      if(!gameFields[x][y].bomb){
-        return checkedBombTrue
+      if (!gameFields[x][y].bomb) {
+        return checkedBombTrue;
       }
       return gameFields[x][y].flag ? checkedBombTrue + 1 : checkedBombTrue - 1;
     });
@@ -81,12 +81,12 @@ export const useGameMapHook = () => {
   };
 
   const onRestart = () => {
-    startGame()
+    startGame();
     setGameFields(
       gameFields.map((columns) =>
         columns.map((field) => ({
           ...field,
-          ...DEFAULT_FIELD,
+          ...DEFAULT_FIELD
         }))));
   };
 
