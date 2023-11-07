@@ -1,4 +1,4 @@
-import { FC, MouseEvent } from 'react';
+import { FC, memo, MouseEvent } from 'react';
 import { CellModel } from 'models/cell.model.ts';
 import { Matrix } from 'models/matrix.model.ts';
 import { GameStatus } from '../../enums/game-status.enum.ts';
@@ -42,9 +42,18 @@ const Box: FC<BoxProps> = ({ gameStatus, show, bombNumber, bomb, flag, onOpenBox
     <div className={boxStyle} onClick={openBox} onContextMenu={setFlag}>
       <img className='box-img' src='/minesweeper.svg' alt='bomb' hidden={showBomb || flag} />
       <img className='box-img' src='/flag.svg' alt='flag' hidden={!flag} />
-      {show &&<p itemProp={`${bombNumber}`} >{bombNumber}</p>}
+      {show && <p itemProp={`${bombNumber}`}>{bombNumber}</p>}
     </div>
   );
 };
 
 export default Box;
+
+export const BoxMemo = memo<BoxProps>(Box,
+  (prevProps, nextProps) =>
+    prevProps.flag === nextProps.flag &&
+    prevProps.show === nextProps.show &&
+    prevProps.gameStatus === nextProps.gameStatus &&
+    prevProps.bomb === nextProps.bomb &&
+    prevProps.bombNumber === nextProps.bombNumber
+);
