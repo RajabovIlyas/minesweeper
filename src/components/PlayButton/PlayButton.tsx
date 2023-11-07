@@ -1,5 +1,5 @@
 import { GameStatus } from '../../enums/game-status.enum.ts';
-import { FC } from 'react';
+import { FC, memo } from 'react';
 
 interface PlayButtonProps {
   gameStatus: GameStatus;
@@ -16,3 +16,5 @@ const PlayButton: FC<PlayButtonProps> = ({gameStatus, onRestart}) => (
 
 
 export default PlayButton
+
+export const PlayButtonMemo = memo<PlayButtonProps>(PlayButton, (prevProps, nextProps) => prevProps.gameStatus === nextProps.gameStatus)
