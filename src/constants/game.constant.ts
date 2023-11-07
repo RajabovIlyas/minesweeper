@@ -1,6 +1,6 @@
 import { CellModel } from 'models/cell.model.ts';
 
-export const COUNT_BOMBS = 100;
+export const COUNT_BOMBS = 5;
 export const CELLS_WIDE = 20;
 
 export const CELLS_HEIGHT = 15;
