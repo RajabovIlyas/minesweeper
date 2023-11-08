@@ -15,16 +15,16 @@ const GameMap: FC = () => {
   } = useGameMapHook();
 
   return (
-    <div className='flex flex-col justify-center justify-items-center w-full flex-wrap'
+    <div className='game-content'
          onContextMenu={closeContextMenu}>
-      <div className='flex gap-3 justify-center justify-items-center my-1'>
-        <h4 className='watch-text'>{checkedBomb}</h4>
+      <div className='game-header'>
+        <h4>{checkedBomb}</h4>
         <PlayButtonMemo gameStatus={gameStatus} onRestart={onRestart} />
-        <h4 className='watch-text'>{checkedBomb}</h4>
+        <h4>{checkedBomb}</h4>
       </div>
-      <div className='flex flex-col gap-1'>
+      <div className='game-map'>
         {gameFields.map((fields, x) => (
-          <div key={fields?.[0].id} className='flex gap-1 justify-center'>
+          <div key={fields?.[0].id} className='game-map_column'>
             {fields.map(({ id, ...field }, y) =>
               <BoxMemo {...field}
                    key={id}

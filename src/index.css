@@ -9,6 +9,11 @@
         font-weight: normal;
         src: url(/public/fonts/DS-DIGI.ttf) format("woff");
     }
+    body {
+        -moz-user-select: none;
+        -khtml-user-select: none;
+        user-select: none;
+    }
     p {
         @apply font-extrabold font-mono
     }
@@ -45,6 +50,18 @@
 }
 
 @layer components {
+    .game-content{
+        @apply flex flex-col justify-items-center w-full min-h-screen flex-wrap
+    }
+    .game-header {
+        @apply flex gap-3 justify-center justify-items-center my-1
+    }
+    .game-map {
+        @apply flex flex-col gap-1
+    }
+    .game-map_column {
+        @apply flex gap-1 justify-center
+    }
     .box {
         @apply flex justify-center items-center rounded-lg w-7 h-7;
     }
