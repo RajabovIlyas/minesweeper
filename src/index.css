@@ -13,6 +13,7 @@
         -moz-user-select: none;
         -khtml-user-select: none;
         user-select: none;
+        padding: 20px;
     }
     p {
         @apply font-extrabold font-mono
@@ -57,10 +58,13 @@
         @apply flex gap-3 justify-center justify-items-center my-1
     }
     .game-map {
-        @apply flex flex-col gap-1
+        @apply flex flex-col gap-0.5
     }
     .game-map_column {
-        @apply flex gap-1 justify-center
+        @apply flex gap-0.5 justify-center
+    }
+    .box-shadow {
+        box-shadow:  inset 1px 1px 1px rgba(255, 255, 255, 0.45);
     }
     .box {
         @apply flex justify-center items-center rounded-lg w-7 h-7;
