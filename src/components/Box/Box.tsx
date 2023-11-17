@@ -34,7 +34,7 @@ const Box: FC<BoxProps> = ({ gameStatus, show, bombNumber, bomb, flag, onOpenBox
 
   const boxStyle = `box ${show
     ? `bg-open`
-    : `bg-close ${flag || gameStatus === GameStatus.FALL
+    : `bg-close box-shadow ${flag || gameStatus === GameStatus.FALL
       ? ''
       : 'hover:bg-close_hover'}`}`;
 

@@ -1,8 +1,9 @@
 import { Matrix } from 'models/matrix.model.ts';
 import { openBox } from 'algorithms/step.algorithm.ts';
 import { CellModel } from 'models/cell.model.ts';
-import { copyGameFields } from 'helpers/copy-fields.ts';
+import { copyGameFields } from '../helpers/copy-fields.helper.ts';
 import { CELLS_HEIGHT, CELLS_WIDE, COUNT_BOMBS } from 'constants/game.constant.ts';
+import { randomCountHelper } from '../helpers/random-count.helper.ts';
 
 
 
@@ -15,13 +16,13 @@ interface Props extends Matrix {
   gameFields: CellModel[][];
 }
 
-const randomCount = (max: number) => Math.floor(Math.random() * max);
+
 
 const getRandomBomb = (props: BombProps): Matrix => {
   const { bombs, x, y } = props
 
-  let xBomb = randomCount(CELLS_HEIGHT);
-  let yBomb = randomCount(CELLS_WIDE);
+  let xBomb = randomCountHelper(CELLS_HEIGHT);
+  let yBomb = randomCountHelper(CELLS_WIDE);
 
   if ((x - 1 <= xBomb &&  x + 1 >= xBomb) && (y - 1 <= yBomb &&  y + 1>= yBomb)) {
     return getRandomBomb(props);
@@ -63,6 +64,9 @@ const generateBomb = ({ gameFields, x, y }: Props): CellModel[][] => {
 
 
 
-export const firstStepAlgorithm = (props: Props): CellModel[][] => {
+export const initialMoveAlgorithm = (props: Props): CellModel[][] => {
+  if(props.x <0 || props.y < 0 || props.x >= CELLS_HEIGHT || props.y >= CELLS_WIDE){
+    return props.gameFields;
+  }
   return openBox({ ...props, gameFields: generateBomb(props) });
 };
