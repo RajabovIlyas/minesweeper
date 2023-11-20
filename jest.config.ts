@@ -14,6 +14,7 @@ const config: JestConfigWithTsJest = {
     'models/(.*)$': '<rootDir>/src/models/$1',
     'algorithms/(.*)$': '<rootDir>/src/algorithms/$1',
     'components/(.*)$': '<rootDir>/src/components/$1',
+    'enums/(.*)$': '<rootDir>/src/enums/$1',
   }
 };
 

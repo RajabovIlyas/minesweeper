@@ -1,12 +1,12 @@
-import { GameStatus } from '../../../enums/game-status.enum.ts';
+import { GameStatus } from 'enums/game-status.enum.ts';
 import { CELLS_HEIGHT, CELLS_WIDE, COUNT_BOMBS, DEFAULT_FIELD } from '../../../constants/game.constant.ts';
 import { GameAction, GameInitialState, GameTypes } from './type.ts';
 import { Reducer, useReducer } from 'react';
-import { stepAlgorithm } from '../../../algorithms/step.algorithm.ts';
-import { copyGameFields } from '../../../helpers/copy-fields.helper.ts';
+import { stepAlgorithm } from 'algorithms/step.algorithm.ts';
+import { copyGameFields } from 'helpers/copy-fields.helper.ts';
 import { gameActionCreators } from './action-creators.ts';
-import { initialMoveAlgorithm } from '../../../algorithms/initial-move.algorithm.ts';
-import { createMapByParams } from '../../../helpers/create-map.helper.ts';
+import { initialMoveAlgorithm } from 'algorithms/initial-move.algorithm.ts';
+import { createMapByParams } from 'helpers/create-map.helper.ts';
 
 const reducer: Reducer<GameInitialState, GameAction> = (state, { payload, type }) => {
 
@@ -101,7 +101,7 @@ const initialState: GameInitialState = {
 
 
 
-export const gameReducer = () => {
+export const useGameReducer = () => {
   const [state, dispatch] = useReducer(reducer, initialState);
   return { ...state, ...gameActionCreators(dispatch) };
 };
