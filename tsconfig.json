@@ -11,7 +11,8 @@
       "helpers": ["./helpers/*"],
       "models": ["./models/*"],
       "algorithms": ["./algorithms/*"],
-      "components": ["./components/*"]
+      "components": ["./components/*"],
+      "enums": ["./enums/*"]
     },
 
     /* Bundler mode */

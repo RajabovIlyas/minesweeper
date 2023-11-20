@@ -1,18 +1,16 @@
-import { MouseEvent, useEffect } from 'react';
-import { gameReducer } from './reducer';
+import { MouseEvent, useMemo } from 'react';
+import { useGameReducer } from './reducer';
 
 export const useGameMapHook = () => {
-  const {newGameFields, checkedBombTrue, winGame, ...data} = gameReducer();
+  const {newGameFields, checkedBombTrue, winGame, ...data} = useGameReducer();
 
 
-  useEffect(() => {
+  useMemo(() => {
     newGameFields();
   }, []);
 
-  useEffect(() => {
-    if (checkedBombTrue <= 0) {
-      winGame();
-    }
+  useMemo(() => {
+      winGame(checkedBombTrue);
   }, [checkedBombTrue]);
 
   const closeContextMenu = (event: MouseEvent) => {

@@ -1,9 +1,9 @@
 import { Matrix } from 'models/matrix.model.ts';
 import { openBox } from 'algorithms/step.algorithm.ts';
 import { CellModel } from 'models/cell.model.ts';
-import { copyGameFields } from '../helpers/copy-fields.helper.ts';
+import { copyGameFields } from 'helpers/copy-fields.helper.ts';
 import { CELLS_HEIGHT, CELLS_WIDE, COUNT_BOMBS } from 'constants/game.constant.ts';
-import { randomCountHelper } from '../helpers/random-count.helper.ts';
+import { randomCountHelper } from 'helpers/random-count.helper.ts';
 
 
 
@@ -21,8 +21,8 @@ interface Props extends Matrix {
 const getRandomBomb = (props: BombProps): Matrix => {
   const { bombs, x, y } = props
 
-  let xBomb = randomCountHelper(CELLS_HEIGHT);
-  let yBomb = randomCountHelper(CELLS_WIDE);
+  const xBomb = randomCountHelper(CELLS_HEIGHT);
+  const yBomb = randomCountHelper(CELLS_WIDE);
 
   if ((x - 1 <= xBomb &&  x + 1 >= xBomb) && (y - 1 <= yBomb &&  y + 1>= yBomb)) {
     return getRandomBomb(props);
