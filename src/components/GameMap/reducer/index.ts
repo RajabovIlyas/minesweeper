@@ -1,12 +1,12 @@
-import { GameStatus } from '../../../enums/game-status.enum.ts';
+import { GameStatus } from 'enums/game-status.enum.ts';
 import { CELLS_HEIGHT, CELLS_WIDE, COUNT_BOMBS, DEFAULT_FIELD } from '../../../constants/game.constant.ts';
 import { GameAction, GameInitialState, GameTypes } from './type.ts';
 import { Reducer, useReducer } from 'react';
-import { stepAlgorithm } from '../../../algorithms/step.algorithm.ts';
-import { copyGameFields } from '../../../helpers/copy-fields.ts';
+import { stepAlgorithm } from 'algorithms/step.algorithm.ts';
+import { copyGameFields } from 'helpers/copy-fields.helper.ts';
 import { gameActionCreators } from './action-creators.ts';
-import { firstStepAlgorithm } from '../../../algorithms/first-step.algorithm.ts';
-import { v4 as uuidV4 } from 'uuid';
+import { initialMoveAlgorithm } from 'algorithms/initial-move.algorithm.ts';
+import { createMapByParams } from 'helpers/create-map.helper.ts';
 
 const reducer: Reducer<GameInitialState, GameAction> = (state, { payload, type }) => {
 
@@ -32,7 +32,7 @@ const reducer: Reducer<GameInitialState, GameAction> = (state, { payload, type }
         return {
           ...state,
           firstStep: false,
-          gameFields: firstStepAlgorithm({
+          gameFields: initialMoveAlgorithm({
             ...payload, gameFields: state.gameFields
           })
         };
@@ -84,11 +84,7 @@ const reducer: Reducer<GameInitialState, GameAction> = (state, { payload, type }
       gameStatus: GameStatus.PROCESS,
       checkedBomb: COUNT_BOMBS,
       checkedBombTrue: COUNT_BOMBS,
-      gameFields: [...new Array(CELLS_HEIGHT)].map(() =>
-        [...new Array(CELLS_WIDE)].map(() => ({
-          ...DEFAULT_FIELD,
-          id: uuidV4()
-        })))
+      gameFields: createMapByParams(CELLS_HEIGHT, CELLS_WIDE),
     };
   }
 
@@ -105,7 +101,7 @@ const initialState: GameInitialState = {
 
 
 
-export const gameReducer = () => {
+export const useGameReducer = () => {
   const [state, dispatch] = useReducer(reducer, initialState);
   return { ...state, ...gameActionCreators(dispatch) };
 };

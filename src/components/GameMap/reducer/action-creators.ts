@@ -7,7 +7,7 @@ export const gameActionCreators = (dispatch: Dispatch<GameAction>) => {
     onSetFlag: (data: Matrix) => dispatch({payload: data, type: GameTypes.SET_FLAG}),
     onOpenBox: (data: Matrix) => dispatch({ payload: data, type: GameTypes.OPEN_BOX }),
     newGameFields: () => dispatch({type: GameTypes.CREATE_MAP}),
-    winGame: () => dispatch({type: GameTypes.WIN_GAME}),
+    winGame: (remainingBombs: number) => remainingBombs === 0 && dispatch({type: GameTypes.WIN_GAME}),
     onRestart: () => dispatch({ type: GameTypes.RESTART_GAME }),
   };
 };

@@ -1,9 +1,9 @@
 import { CellModel } from 'models/cell.model.ts';
-import { copyGameFields } from 'helpers/copy-fields.ts';
 import { GAME_OVER } from 'constants/error.constant.ts';
 import { CELLS_HEIGHT, CELLS_WIDE } from 'constants/game.constant.ts';
 import { ONE, ZERO } from 'constants/number.constant.ts';
 import { Matrix } from 'models/matrix.model.ts';
+import { copyGameFields } from 'helpers/copy-fields.helper.ts';
 
 interface Props extends Matrix {
   gameFields: CellModel[][];
@@ -11,15 +11,15 @@ interface Props extends Matrix {
 
 export const openBox = ({ gameFields, x, y }: Props) => {
 
-  if (gameFields[x]?.[y]?.show || gameFields[x]?.[y]?.flag) {
+  if (typeof gameFields[x]?.[y] === 'undefined' || gameFields[x][y]?.show || gameFields[x][y]?.flag ) {
     return gameFields;
   }
 
-  if (gameFields[x]?.[y]?.bomb) {
+  if (gameFields[x][y]?.bomb) {
     throw new Error(GAME_OVER);
   }
 
-  if (gameFields[x]?.[y]?.bombNumber) {
+  if (gameFields[x][y]?.bombNumber) {
     gameFields[x][y].show = true;
     return gameFields;
   }

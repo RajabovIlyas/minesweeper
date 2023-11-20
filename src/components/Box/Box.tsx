@@ -32,9 +32,9 @@ const Box: FC<BoxProps> = ({ gameStatus, show, bombNumber, bomb, flag, onOpenBox
 
   const showBomb = !(gameStatus === GameStatus.FALL && bomb);
 
-  const boxStyle = `box text-red tc-${bombNumber} ${show
+  const boxStyle = `box ${show
     ? `bg-open`
-    : `bg-close ${flag || gameStatus === GameStatus.FALL
+    : `bg-close box-shadow ${flag || gameStatus === GameStatus.FALL
       ? ''
       : 'hover:bg-close_hover'}`}`;
 
@@ -53,7 +53,5 @@ export const BoxMemo = memo<BoxProps>(Box,
   (prevProps, nextProps) =>
     prevProps.flag === nextProps.flag &&
     prevProps.show === nextProps.show &&
-    prevProps.gameStatus === nextProps.gameStatus &&
-    prevProps.bomb === nextProps.bomb &&
-    prevProps.bombNumber === nextProps.bombNumber
+    prevProps.gameStatus === nextProps.gameStatus
 );
