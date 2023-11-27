@@ -30,17 +30,20 @@ const Box: FC<BoxProps> = ({ gameStatus, show, bombNumber, bomb, flag, onOpenBox
     return false;
   };
 
-  const showBomb = !(gameStatus === GameStatus.FALL && bomb);
+  const showBomb = (!(gameStatus === GameStatus.FALL && bomb) || flag);
 
-  const boxStyle = `box ${show
-    ? `bg-open`
-    : `bg-close box-shadow ${flag || gameStatus === GameStatus.FALL
-      ? ''
-      : 'hover:bg-close_hover'}`}`;
+
+  const boxStyle = 'box ' + (show
+    ? 'open'
+    : 'close ' + (
+      gameStatus === GameStatus.FALL
+      ? !flag && bomb && 'bomb'
+      : 'hover:bg-slate-600'
+  ));
 
   return (
     <div className={boxStyle} onClick={openBox} onContextMenu={setFlag}>
-      <img className='box-img' src='/minesweeper.svg' alt='bomb' hidden={showBomb || flag} />
+      <img className='box-img' src='/minesweeper.svg' alt='bomb' hidden={showBomb} />
       <img className='box-img' src='/flag.svg' alt='flag' hidden={!flag} />
       {show && <p itemProp={`${bombNumber}`}>{bombNumber}</p>}
     </div>

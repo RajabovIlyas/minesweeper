@@ -2,29 +2,28 @@ import { Matrix } from 'models/matrix.model.ts';
 import { openBox } from 'algorithms/step.algorithm.ts';
 import { CellModel } from 'models/cell.model.ts';
 import { copyGameFields } from 'helpers/copy-fields.helper.ts';
-import { CELLS_HEIGHT, CELLS_WIDE, COUNT_BOMBS } from 'constants/game.constant.ts';
 import { randomCountHelper } from 'helpers/random-count.helper.ts';
-
-
+import { SettingModel } from '../models/setting.model.ts';
 
 
 interface BombProps extends Matrix {
   bombs: Matrix[];
+  setting: SettingModel
 }
 
 interface Props extends Matrix {
   gameFields: CellModel[][];
+  setting: SettingModel
 }
 
 
-
 const getRandomBomb = (props: BombProps): Matrix => {
-  const { bombs, x, y } = props
+  const { bombs, x, y, setting } = props;
 
-  const xBomb = randomCountHelper(CELLS_HEIGHT);
-  const yBomb = randomCountHelper(CELLS_WIDE);
+  const xBomb = randomCountHelper(setting.rows);
+  const yBomb = randomCountHelper(setting.columns);
 
-  if ((x - 1 <= xBomb &&  x + 1 >= xBomb) && (y - 1 <= yBomb &&  y + 1>= yBomb)) {
+  if ((x - 1 <= xBomb && x + 1 >= xBomb) && (y - 1 <= yBomb && y + 1 >= yBomb)) {
     return getRandomBomb(props);
   }
 
@@ -36,13 +35,13 @@ const getRandomBomb = (props: BombProps): Matrix => {
 };
 
 
-const generateBomb = ({ gameFields, x, y }: Props): CellModel[][] => {
+const generateBomb = ({ gameFields, x, y, setting }: Props): CellModel[][] => {
     const newGameFields = copyGameFields(gameFields);
 
     const bombs: Matrix[] = [];
 
-    for (let i = 0; i < COUNT_BOMBS; i++) {
-      bombs.push(getRandomBomb({ bombs, x, y }));
+    for (let i = 0; i < setting.bombs; i++) {
+      bombs.push(getRandomBomb({ bombs, x, y, setting }));
     }
 
 
@@ -50,7 +49,7 @@ const generateBomb = ({ gameFields, x, y }: Props): CellModel[][] => {
       newGameFields[bomb.x][bomb.y].bomb = true;
       for (let xCheck = bomb.x - 1; xCheck <= bomb.x + 1; xCheck++) {
         for (let yCheck = bomb.y - 1; yCheck <= bomb.y + 1; yCheck++) {
-          if(newGameFields?.[xCheck]?.[yCheck]) {
+          if (newGameFields?.[xCheck]?.[yCheck]) {
             newGameFields[xCheck][yCheck].bombNumber = (newGameFields[xCheck][yCheck].bombNumber || 0) + 1;
           }
         }
@@ -63,9 +62,8 @@ const generateBomb = ({ gameFields, x, y }: Props): CellModel[][] => {
 ;
 
 
-
 export const initialMoveAlgorithm = (props: Props): CellModel[][] => {
-  if(props.x <0 || props.y < 0 || props.x >= CELLS_HEIGHT || props.y >= CELLS_WIDE){
+  if (props.x < 0 || props.y < 0 || props.x >= props.setting.rows || props.y >= props.setting.columns) {
     return props.gameFields;
   }
   return openBox({ ...props, gameFields: generateBomb(props) });

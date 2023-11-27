@@ -1,7 +1,7 @@
 import { FC } from 'react';
-import GameMap from './components/GameMap/GameMap.tsx';
+import Content from './components/Content/Content.tsx';
 
 
-const App: FC = () => <GameMap/>;
+const App: FC = () => <Content />;
 
 export default App;

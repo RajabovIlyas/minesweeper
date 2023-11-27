@@ -1,14 +1,23 @@
-import { GameStatus } from 'enums/game-status.enum.ts';
-import { CELLS_HEIGHT, CELLS_WIDE, COUNT_BOMBS, DEFAULT_FIELD } from '../../../constants/game.constant.ts';
+import { Reducer } from 'react';
 import { GameAction, GameInitialState, GameTypes } from './type.ts';
-import { Reducer, useReducer } from 'react';
-import { stepAlgorithm } from 'algorithms/step.algorithm.ts';
-import { copyGameFields } from 'helpers/copy-fields.helper.ts';
-import { gameActionCreators } from './action-creators.ts';
-import { initialMoveAlgorithm } from 'algorithms/initial-move.algorithm.ts';
-import { createMapByParams } from 'helpers/create-map.helper.ts';
+import { copyGameFields } from '../../../helpers/copy-fields.helper.ts';
+import { initialMoveAlgorithm } from '../../../algorithms/initial-move.algorithm.ts';
+import { stepAlgorithm } from '../../../algorithms/step.algorithm.ts';
+import { GameStatus } from '../../../enums/game-status.enum.ts';
+import { DEFAULT_FIELD, DEFAULT_SETTINGS, GAME_SETTINGS } from '../../../constants/game.constant.ts';
+import { createMapByParams } from '../../../helpers/create-map.helper.ts';
 
-const reducer: Reducer<GameInitialState, GameAction> = (state, { payload, type }) => {
+export const initialState: GameInitialState = {
+  firstStep: true,
+  gameStatus: GameStatus.PROCESS,
+  checkedBomb: 20,
+  checkedBombTrue: 20,
+  gameFields: [],
+  settings: JSON.parse(localStorage.getItem(GAME_SETTINGS) || 'null') || DEFAULT_SETTINGS
+};
+
+export const reducer: Reducer<GameInitialState, GameAction> = (state, { payload, type }) => {
+
 
   if (type === GameTypes.SET_FLAG) {
     const { gameFields, checkedBombTrue, checkedBomb } = state;
@@ -33,7 +42,7 @@ const reducer: Reducer<GameInitialState, GameAction> = (state, { payload, type }
           ...state,
           firstStep: false,
           gameFields: initialMoveAlgorithm({
-            ...payload, gameFields: state.gameFields
+            ...payload, gameFields: state.gameFields, setting: state.settings
           })
         };
       }
@@ -42,7 +51,8 @@ const reducer: Reducer<GameInitialState, GameAction> = (state, { payload, type }
         ...state,
         gameFields: stepAlgorithm({
           ...payload,
-          gameFields: state.gameFields
+          gameFields: state.gameFields,
+          setting: state.settings
         })
       };
     }catch (e){
@@ -66,13 +76,25 @@ const reducer: Reducer<GameInitialState, GameAction> = (state, { payload, type }
       ...state,
       firstStep: true,
       gameStatus: GameStatus.PROCESS,
-      checkedBomb: COUNT_BOMBS,
-      checkedBombTrue: COUNT_BOMBS,
+      checkedBomb: state.settings.bombs,
+      checkedBombTrue: state.settings.bombs,
       gameFields: state.gameFields.map((columns) =>
         columns.map((field) => ({
           ...field,
           ...DEFAULT_FIELD
         })))
+    }
+  }
+
+  if(type === GameTypes.UPDATE_SETTING){
+    return {
+      ...state,
+      settings: payload,
+      firstStep: true,
+      gameStatus: GameStatus.PROCESS,
+      checkedBomb: payload.bombs,
+      checkedBombTrue: payload.bombs,
+      gameFields: createMapByParams(payload.rows, payload.columns),
     }
   }
 
@@ -82,26 +104,13 @@ const reducer: Reducer<GameInitialState, GameAction> = (state, { payload, type }
       ...state,
       firstStep: true,
       gameStatus: GameStatus.PROCESS,
-      checkedBomb: COUNT_BOMBS,
-      checkedBombTrue: COUNT_BOMBS,
-      gameFields: createMapByParams(CELLS_HEIGHT, CELLS_WIDE),
+      checkedBomb: state.settings.bombs,
+      checkedBombTrue: state.settings.bombs,
+      gameFields: createMapByParams(state.settings.rows, state.settings.columns),
     };
   }
 
   return state;
 };
 
-const initialState: GameInitialState = {
-  firstStep: true,
-  gameStatus: GameStatus.PROCESS,
-  checkedBomb: COUNT_BOMBS,
-  checkedBombTrue: COUNT_BOMBS,
-  gameFields: []
-};
 
-
-
-export const useGameReducer = () => {
-  const [state, dispatch] = useReducer(reducer, initialState);
-  return { ...state, ...gameActionCreators(dispatch) };
-};
