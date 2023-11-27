@@ -1,9 +1,9 @@
-import { CLEAR_GAME_FIELDS_TEST } from '../../constants/test.constant.ts';
+import { CLEAR_GAME_FIELDS_TEST } from 'constants/test.constant.ts';
 import { initialMoveAlgorithm } from '../initial-move.algorithm.ts';
-import { randomCountHelper } from '../../helpers/random-count.helper.ts';
-import { CELLS_HEIGHT, CELLS_WIDE, COUNT_BOMBS } from '../../constants/game.constant.ts';
-import { ONE, ZERO } from '../../constants/number.constant.ts';
-import { createMapByParams } from '../../helpers/create-map.helper.ts';
+import { randomCountHelper } from 'helpers/random-count.helper.ts';
+import { CELLS_HEIGHT, CELLS_WIDE, COUNT_BOMBS, DEFAULT_SETTINGS } from '../../constants/game.constant.ts';
+import { ONE, ZERO } from 'constants/number.constant.ts';
+import { createMapByParams } from 'helpers/create-map.helper.ts';
 
 
 describe('firstStepAlgorithm', () => {
@@ -12,7 +12,7 @@ describe('firstStepAlgorithm', () => {
     const x: number = randomCountHelper(CELLS_HEIGHT);
     const y: number = randomCountHelper(CELLS_WIDE);
 
-    const result = initialMoveAlgorithm({ gameFields, x, y });
+    const result = initialMoveAlgorithm({ gameFields, x, y, setting: DEFAULT_SETTINGS });
 
     for (let xCheck = x <= ZERO ? x : x - ONE; xCheck <= (x >= CELLS_HEIGHT - ONE ? x : x + ONE); xCheck++) {
       for (let yCheck = y <= ZERO ? y : y - ONE; yCheck <= (y >= CELLS_WIDE - ONE ? y : y + ONE); yCheck++) {
@@ -26,7 +26,7 @@ describe('firstStepAlgorithm', () => {
     const x: number = ZERO;
     const y: number = ZERO;
 
-    const result = initialMoveAlgorithm({ gameFields, x, y });
+    const result = initialMoveAlgorithm({ gameFields, x, y, setting: DEFAULT_SETTINGS });
 
     expect(result[ZERO][ZERO].show).toBe(true);
     expect(result[ZERO][ONE].show).toBe(true);
@@ -39,7 +39,7 @@ describe('firstStepAlgorithm', () => {
     const x: number = CELLS_HEIGHT - ONE;
     const y: number = CELLS_WIDE - ONE;
 
-    const result = initialMoveAlgorithm({ gameFields, x, y });
+    const result = initialMoveAlgorithm({ gameFields, x, y, setting: DEFAULT_SETTINGS });
 
     expect(result[x][y].show).toBe(true);
     expect(result[x][y - ONE].show).toBe(true);
@@ -52,7 +52,7 @@ describe('firstStepAlgorithm', () => {
     const x: number = randomCountHelper(CELLS_HEIGHT);
     const y: number = randomCountHelper(CELLS_WIDE);
 
-    const result = initialMoveAlgorithm({ gameFields, x, y }).reduce((previousValue, currentValue) => {
+    const result = initialMoveAlgorithm({ gameFields, x, y, setting: DEFAULT_SETTINGS }).reduce((previousValue, currentValue) => {
       return previousValue + currentValue.filter(({ bomb }) => bomb).length;
     }, ZERO);
 
@@ -64,7 +64,7 @@ describe('firstStepAlgorithm', () => {
     const x: number = randomCountHelper(CELLS_HEIGHT);
     const y: number = randomCountHelper(CELLS_WIDE);
 
-    const result = initialMoveAlgorithm({ gameFields, x, y }).some((fields => fields.some(({
+    const result = initialMoveAlgorithm({ gameFields, x, y, setting: DEFAULT_SETTINGS }).some((fields => fields.some(({
                                                                                            show,
                                                                                            bomb
                                                                                          }) => (show && bomb))));
@@ -75,21 +75,21 @@ describe('firstStepAlgorithm', () => {
   it('должен возвращать исходное значение когда координаты x и y находятся вне поля', () => {
     const gameFields = CLEAR_GAME_FIELDS_TEST;
 
-    expect(initialMoveAlgorithm({ gameFields, x: -ONE, y: -ONE })).toBe(gameFields);
-    expect(initialMoveAlgorithm({ gameFields, x: CELLS_HEIGHT + 4, y: 2 })).toBe(gameFields);
-    expect(initialMoveAlgorithm({ gameFields, x: -ONE, y: 5 })).toBe(gameFields);
-    expect(initialMoveAlgorithm({ gameFields, x: 4, y: -ONE })).toBe(gameFields);
-    expect(initialMoveAlgorithm({ gameFields, x: 6, y: CELLS_WIDE + 6 })).toBe(gameFields);
+    expect(initialMoveAlgorithm({ gameFields, x: -ONE, y: -ONE, setting: DEFAULT_SETTINGS })).toBe(gameFields);
+    expect(initialMoveAlgorithm({ gameFields, x: CELLS_HEIGHT + 4, y: 2, setting: DEFAULT_SETTINGS })).toBe(gameFields);
+    expect(initialMoveAlgorithm({ gameFields, x: -ONE, y: 5, setting: DEFAULT_SETTINGS })).toBe(gameFields);
+    expect(initialMoveAlgorithm({ gameFields, x: 4, y: -ONE, setting: DEFAULT_SETTINGS })).toBe(gameFields);
+    expect(initialMoveAlgorithm({ gameFields, x: 6, y: CELLS_WIDE + 6, setting: DEFAULT_SETTINGS })).toBe(gameFields);
   });
 
   it('должен возвращать исходное значение когда координаты x и y находятся вне поля', () => {
     const gameFields = CLEAR_GAME_FIELDS_TEST;
 
-    expect(initialMoveAlgorithm({ gameFields, x: -ONE, y: -ONE })).toBe(gameFields);
-    expect(initialMoveAlgorithm({ gameFields, x: CELLS_HEIGHT + 4, y: 2 })).toBe(gameFields);
-    expect(initialMoveAlgorithm({ gameFields, x: -ONE, y: 5 })).toBe(gameFields);
-    expect(initialMoveAlgorithm({ gameFields, x: 4, y: -ONE })).toBe(gameFields);
-    expect(initialMoveAlgorithm({ gameFields, x: 6, y: CELLS_WIDE + 6 })).toBe(gameFields);
+    expect(initialMoveAlgorithm({ gameFields, x: -ONE, y: -ONE, setting: DEFAULT_SETTINGS })).toBe(gameFields);
+    expect(initialMoveAlgorithm({ gameFields, x: CELLS_HEIGHT + 4, y: 2, setting: DEFAULT_SETTINGS })).toBe(gameFields);
+    expect(initialMoveAlgorithm({ gameFields, x: -ONE, y: 5, setting: DEFAULT_SETTINGS })).toBe(gameFields);
+    expect(initialMoveAlgorithm({ gameFields, x: 4, y: -ONE, setting: DEFAULT_SETTINGS })).toBe(gameFields);
+    expect(initialMoveAlgorithm({ gameFields, x: 6, y: CELLS_WIDE + 6, setting: DEFAULT_SETTINGS })).toBe(gameFields);
   });
 
   it('должен корректно расставить цифры вокруг бомбы', () => {
@@ -100,7 +100,7 @@ describe('firstStepAlgorithm', () => {
 
     const countBombs = createMapByParams(gameFields.length, gameFields[ZERO].length)
 
-    const result = initialMoveAlgorithm({ gameFields, x, y });
+    const result = initialMoveAlgorithm({ gameFields, x, y, setting: DEFAULT_SETTINGS });
 
     result.forEach((fields, xCheckBomb) => {
       fields.forEach(({bomb}, yCheckBomb) => {

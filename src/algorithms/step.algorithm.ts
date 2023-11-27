@@ -1,17 +1,18 @@
 import { CellModel } from 'models/cell.model.ts';
 import { GAME_OVER } from 'constants/error.constant.ts';
-import { CELLS_HEIGHT, CELLS_WIDE } from 'constants/game.constant.ts';
 import { ONE, ZERO } from 'constants/number.constant.ts';
 import { Matrix } from 'models/matrix.model.ts';
 import { copyGameFields } from 'helpers/copy-fields.helper.ts';
+import { SettingModel } from '../models/setting.model.ts';
 
 interface Props extends Matrix {
   gameFields: CellModel[][];
+  setting: SettingModel
 }
 
-export const openBox = ({ gameFields, x, y }: Props) => {
+export const openBox = ({ gameFields, x, y, setting }: Props) => {
 
-  if (typeof gameFields[x]?.[y] === 'undefined' || gameFields[x][y]?.show || gameFields[x][y]?.flag ) {
+  if (typeof gameFields[x]?.[y] === 'undefined' || gameFields[x][y]?.show || gameFields[x][y]?.flag) {
     return gameFields;
   }
 
@@ -27,9 +28,9 @@ export const openBox = ({ gameFields, x, y }: Props) => {
   gameFields[x][y].show = true;
 
 
-  for (let xCheck = x <= ZERO ? x : x - ONE; xCheck <= (x >= CELLS_HEIGHT - ONE ? x : x + ONE); xCheck++) {
-    for (let yCheck = y <= ZERO ? y : y - ONE; yCheck <= (y >= CELLS_WIDE - ONE ? y : y + ONE); yCheck++) {
-      gameFields = openBox({ gameFields, x: xCheck, y: yCheck });
+  for (let xCheck = x <= ZERO ? x : x - ONE; xCheck <= (x >= setting.rows - ONE ? x : x + ONE); xCheck++) {
+    for (let yCheck = y <= ZERO ? y : y - ONE; yCheck <= (y >= setting.columns - ONE ? y : y + ONE); yCheck++) {
+      gameFields = openBox({ gameFields, x: xCheck, y: yCheck, setting });
     }
   }
 
@@ -37,8 +38,8 @@ export const openBox = ({ gameFields, x, y }: Props) => {
 };
 
 
-export const stepAlgorithm = ({ gameFields, x, y }: Props): CellModel[][] => {
+export const stepAlgorithm = ({ gameFields, ...params }: Props): CellModel[][] => {
   const newGameFields = copyGameFields(gameFields);
 
-  return openBox({ gameFields: newGameFields, x, y });
+  return openBox({ ...params, gameFields: newGameFields });
 };
