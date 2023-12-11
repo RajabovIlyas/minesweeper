@@ -14,7 +14,6 @@ const Content: FC = () => {
     closeContextMenu,
     ...headerProps
   } = useGameMapHook();
-  console.log('data', gameFields)
 
   return (
     <div className='game-content'
