@@ -28,7 +28,7 @@ const Setting: FC<SettingProps> = ({ formId, ...props }) => {
           <input  {...register('rows')}
                   type='number'
                   className='input' />
-          <p className='mt-2 text-sm text-red-600'>{errors?.rows?.message}</p>
+          <p className='input-wrong'>{errors?.rows?.message}</p>
         </div>
         <div>
           <label htmlFor='columns'
@@ -38,7 +38,7 @@ const Setting: FC<SettingProps> = ({ formId, ...props }) => {
           <input {...register('columns')}
                  type='number'
                  className='input' />
-          <p className='mt-2 text-sm text-red-600'>{errors?.columns?.message}</p>
+          <p className='input-wrong'>{errors?.columns?.message}</p>
         </div>
         <div>
           <label htmlFor='bombs'
@@ -49,7 +49,7 @@ const Setting: FC<SettingProps> = ({ formId, ...props }) => {
                  type='number'
                  className='input'
                  required />
-          <p className='mt-2 text-sm text-red-600'>{errors?.bombs?.message}</p>
+          <p className='input-wrong'>{errors?.bombs?.message}</p>
         </div>
       </div>
     </form>
