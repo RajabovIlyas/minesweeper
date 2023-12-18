@@ -28,12 +28,13 @@ export interface SetFlagAction {
 
 export interface OpenBoxAction {
   type: GameTypes.OPEN_BOX;
-  payload: Matrix;
+  payload: { matrix: Matrix, startOrStopWatch: (value: boolean) => void };
+
 }
 
 export interface WinGameAction {
   type: GameTypes.WIN_GAME;
-  payload?: null,
+  payload: { startOrStopWatch: (value: boolean) => void },
 }
 
 export interface RestartGameAction {

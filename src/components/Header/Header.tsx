@@ -4,6 +4,7 @@ import { FC, memo, useId, useState } from 'react';
 import Modal from '../Modal/Modal.tsx';
 import Setting from '../Setting/Setting.tsx';
 import { SettingModel } from '../../models/setting.model.ts';
+import { showNumber } from '../../helpers/show-number.helper.ts';
 
 interface HeaderProps {
   checkedBomb: number;
@@ -11,10 +12,11 @@ interface HeaderProps {
   onRestart: () => void;
   updateSetting: (data: SettingModel) => void;
   gameSettings: SettingModel;
+  seconds: number;
 }
 
 
-const Header: FC<HeaderProps> = ({ checkedBomb, gameStatus, onRestart, updateSetting, gameSettings }) => {
+const Header: FC<HeaderProps> = ({ checkedBomb, gameStatus, onRestart, updateSetting, gameSettings, seconds }) => {
   const formId = useId();
 
   const [showWindow, setShowWindow] = useState(false);
@@ -41,9 +43,9 @@ const Header: FC<HeaderProps> = ({ checkedBomb, gameStatus, onRestart, updateSet
 
         </button>
         <div className='game-status'>
-          <h4>{checkedBomb}</h4>
+          <h4>{showNumber(checkedBomb)}</h4>
           <PlayButtonMemo gameStatus={gameStatus} onRestart={onRestart} />
-          <h4>{checkedBomb}</h4>
+          <h4>{showNumber(seconds)}</h4>
         </div>
         <div className='w-6' />
       </div>
@@ -57,6 +59,7 @@ const Header: FC<HeaderProps> = ({ checkedBomb, gameStatus, onRestart, updateSet
 export default Header;
 
 export const MemoHeader = memo<HeaderProps>(Header, (prevProps, nextProps) =>
+  prevProps.seconds === nextProps.seconds &&
   prevProps.gameStatus === nextProps.gameStatus &&
   prevProps.checkedBomb === nextProps.checkedBomb&&
   JSON.stringify(prevProps.gameSettings)===JSON.stringify(nextProps.gameSettings));

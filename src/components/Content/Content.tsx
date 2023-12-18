@@ -1,6 +1,6 @@
 import { FC } from 'react';
 import { BoxMemo } from 'components/Box/Box.tsx';
-import { useGameMapHook } from './content.hook.ts';
+import { useGameMapHook } from './hooks';
 import { MemoHeader } from '../Header/Header.tsx';
 
 const Content: FC = () => {

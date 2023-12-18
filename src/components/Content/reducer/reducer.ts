@@ -36,13 +36,15 @@ export const reducer: Reducer<GameInitialState, GameAction> = (state, { payload,
   }
 
   if (type === GameTypes.OPEN_BOX) {
+    const { matrix, startOrStopWatch } = payload;
     try {
       if (state.firstStep) {
+        startOrStopWatch(true);
         return {
           ...state,
           firstStep: false,
           gameFields: initialMoveAlgorithm({
-            ...payload, gameFields: state.gameFields, setting: state.settings
+            ...matrix, gameFields: state.gameFields, setting: state.settings
           })
         };
       }
@@ -50,17 +52,20 @@ export const reducer: Reducer<GameInitialState, GameAction> = (state, { payload,
       return {
         ...state,
         gameFields: stepAlgorithm({
-          ...payload,
+          ...matrix,
           gameFields: state.gameFields,
           setting: state.settings
         })
       };
-    }catch (e){
-      return {...state, gameStatus: GameStatus.FALL, }
+    } catch (e) {
+      startOrStopWatch(false);
+      return { ...state, gameStatus: GameStatus.FALL };
     }
   }
 
   if (type === GameTypes.WIN_GAME) {
+    const { startOrStopWatch } = payload;
+    startOrStopWatch(false);
     return {
       ...state,
       gameStatus: GameStatus.WIN,
@@ -71,7 +76,7 @@ export const reducer: Reducer<GameInitialState, GameAction> = (state, { payload,
     };
   }
 
-  if(type === GameTypes.RESTART_GAME){
+  if (type === GameTypes.RESTART_GAME) {
     return {
       ...state,
       firstStep: true,
@@ -83,10 +88,10 @@ export const reducer: Reducer<GameInitialState, GameAction> = (state, { payload,
           ...field,
           ...DEFAULT_FIELD
         })))
-    }
+    };
   }
 
-  if(type === GameTypes.UPDATE_SETTING){
+  if (type === GameTypes.UPDATE_SETTING) {
     return {
       ...state,
       settings: payload,
@@ -94,8 +99,8 @@ export const reducer: Reducer<GameInitialState, GameAction> = (state, { payload,
       gameStatus: GameStatus.PROCESS,
       checkedBomb: payload.bombs,
       checkedBombTrue: payload.bombs,
-      gameFields: createMapByParams(payload.rows, payload.columns),
-    }
+      gameFields: createMapByParams(payload.rows, payload.columns)
+    };
   }
 
 
@@ -106,7 +111,7 @@ export const reducer: Reducer<GameInitialState, GameAction> = (state, { payload,
       gameStatus: GameStatus.PROCESS,
       checkedBomb: state.settings.bombs,
       checkedBombTrue: state.settings.bombs,
-      gameFields: createMapByParams(state.settings.rows, state.settings.columns),
+      gameFields: createMapByParams(state.settings.rows, state.settings.columns)
     };
   }
 
