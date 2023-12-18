@@ -38,7 +38,7 @@ const Box: FC<BoxProps> = ({ gameStatus, show, bombNumber, bomb, flag, onOpenBox
     : 'close ' + (
       gameStatus === GameStatus.FALL
       ? !flag && bomb && 'bomb'
-      : 'hover:bg-slate-600'
+      : 'dark:hover:bg-slate-600 hover:bg-slate-600'
   ));
 
   return (
