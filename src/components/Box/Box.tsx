@@ -11,17 +11,19 @@ interface BoxProps extends Omit<CellModel, 'id'> {
   gameStatus: GameStatus;
 }
 
-const Box: FC<BoxProps> = ({ gameStatus, show, bombNumber, bomb, flag, onOpenBox, onSetFlag, x, y }) => {
+const checkStatus = (status: GameStatus) => status !== GameStatus.PROCESS && status !== GameStatus.START
+
+const Box: FC<BoxProps> = memo<BoxProps>(({ gameStatus, show, bombNumber, bomb, flag, onOpenBox, onSetFlag, x, y }) => {
 
   const openBox = () => {
-    if (gameStatus !== GameStatus.PROCESS || show) {
+    if (checkStatus(gameStatus) || show) {
       return;
     }
     onOpenBox({ x, y });
   };
 
   const setFlag = (event: MouseEvent) => {
-    if (show || gameStatus !== GameStatus.PROCESS) {
+    if (checkStatus(gameStatus) || show) {
       return;
     }
 
@@ -48,13 +50,12 @@ const Box: FC<BoxProps> = ({ gameStatus, show, bombNumber, bomb, flag, onOpenBox
       {show && <p itemProp={`${bombNumber}`}>{bombNumber}</p>}
     </div>
   );
-};
-
-export default Box;
-
-export const BoxMemo = memo<BoxProps>(Box,
+},
   (prevProps, nextProps) =>
     prevProps.flag === nextProps.flag &&
     prevProps.show === nextProps.show &&
     prevProps.gameStatus === nextProps.gameStatus
 );
+
+
+export default Box

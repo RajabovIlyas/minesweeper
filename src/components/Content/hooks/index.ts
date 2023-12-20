@@ -1,5 +1,5 @@
 import { MouseEvent, useMemo } from 'react';
-import { useGameReducer } from './reducer';
+import { useGameReducer } from '../reducer';
 
 export const useGameMapHook = () => {
   const {newGameFields, checkedBombTrue, winGame, ...data} = useGameReducer();
