@@ -1,7 +1,15 @@
-import { FC } from 'react';
-import Content from './components/Content/Content.tsx';
+import { FC, lazy, Suspense } from 'react';
+import Loader from './components/Loader/Loader.tsx';
+import { defaultTheme, insertTheme } from './helpers/theme.helper.ts';
 
+insertTheme(defaultTheme());
 
-const App: FC = () => <Content />;
+const Content = lazy(() => import('./components/Content/Content.tsx'));
+const App: FC = () => (
+  <Suspense
+    fallback={<Loader/>}>
+    <Content />
+  </Suspense>
+);
 
 export default App;

@@ -52,7 +52,7 @@ const Header: FC<HeaderProps> = memo<HeaderProps>(({
           <ThemeSwitch />
         </div>
         <div className='game-status'>
-          <h4>{showNumber(checkedBomb)}</h4>
+          <h2>{showNumber(checkedBomb)}</h2>
           <PlayButton gameStatus={gameStatus} onRestart={onRestart} />
           <StopWatch gameStatus={gameStatus} />
         </div>
