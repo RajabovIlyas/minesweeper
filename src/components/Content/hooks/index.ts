@@ -1,18 +1,16 @@
 import { MouseEvent, useMemo } from 'react';
 import { useGameReducer } from '../reducer';
-import { useStopwatch } from './stopwatch.hook.ts';
 
 export const useGameMapHook = () => {
-  const {newGameFields, onRestart, updateSetting, checkedBombTrue, winGame, onOpenBox, ...data} = useGameReducer();
-  const {resetStopWatch, startOrStopWatch, seconds} = useStopwatch();
+  const {newGameFields, checkedBombTrue, winGame, ...data} = useGameReducer();
 
 
   useMemo(() => {
-    newGameFields(resetStopWatch)();
+    newGameFields();
   }, []);
 
   useMemo(() => {
-      winGame(checkedBombTrue, startOrStopWatch);
+      winGame(checkedBombTrue);
   }, [checkedBombTrue]);
 
   const closeContextMenu = (event: MouseEvent) => {
@@ -23,10 +21,6 @@ export const useGameMapHook = () => {
 
   return {
     ...data,
-    onOpenBox: onOpenBox(startOrStopWatch),
-    onRestart: onRestart(resetStopWatch),
-    updateSetting: updateSetting(resetStopWatch),
-    seconds,
     closeContextMenu
   };
 };

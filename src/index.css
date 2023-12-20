@@ -13,41 +13,71 @@
         -moz-user-select: none;
         -khtml-user-select: none;
         user-select: none;
-        @apply dark:bg-zinc-900 p-5
+        @apply dark:bg-zinc-900 bg-blue-50 p-5
     }
+
     p {
         @apply font-extrabold font-mono
     }
+
     h4 {
         @apply dark:text-zinc-400 m-0 font-digi text-3xl
     }
 
-    p[itemProp='1']{
+    p[itemProp='1'] {
         @apply text-cyan-500
     }
-    p[itemProp='2']{
+
+    p[itemProp='2'] {
         @apply text-lime-500
     }
-    p[itemProp='3']{
+
+    p[itemProp='3'] {
         @apply text-red-500
     }
-    p[itemProp='4']{
+
+    p[itemProp='4'] {
         @apply text-blue-700
     }
-    p[itemProp='5']{
+
+    p[itemProp='5'] {
         @apply text-yellow-700
     }
-    p[itemProp='6']{
+
+    p[itemProp='6'] {
         @apply text-cyan-700
     }
-    p[itemProp='7']{
+
+    p[itemProp='7'] {
         @apply text-neutral-800
     }
-    p[itemProp='8']{
+
+    p[itemProp='8'] {
         @apply text-sky-400
     }
+
+    input {
+        @apply dark:bg-neutral-900 dark:text-zinc-300 dark:border-neutral-700 dark:focus:ring-emerald-700 dark:focus:border-emerald-700 focus:border-emerald-500 focus-visible:outline-0 mt-2 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-emerald-500 block w-full p-2.5
+    }
+
+    input[type=radio] {
+        @apply w-4 h-4 mt-0 dark:accent-emerald-700
+    }
+
     input[type=number]::-webkit-inner-spin-button {
         -webkit-appearance: none;
+    }
+
+    input[type=radio]::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+    }
+
+    label {
+        @apply dark:text-zinc-300 block text-sm font-medium text-gray-900
+    }
+
+    label::first-letter {
+        text-transform: uppercase;
     }
 }
 
@@ -55,44 +85,70 @@
     .header {
         @apply flex gap-3 justify-between items-center w-full
     }
+
     .game-status {
         @apply flex gap-3 justify-center items-center my-1
     }
-    .game-content{
+
+    .game-content {
         @apply flex flex-col justify-items-center w-full min-h-screen flex-wrap mx-auto
     }
+
     .game-map {
         @apply flex flex-col gap-0.5
     }
+
     .game-map_column {
         @apply flex gap-0.5 justify-center
     }
+
     .box {
         @apply flex justify-center items-center rounded-lg w-7 h-7 transition-colors duration-100;
     }
+
     .box-img {
         @apply w-5 h-5
     }
+
     .button-img {
         @apply dark:fill-zinc-300 hover:scale-110 w-6 h-6  transition duration-200 rounded-full
     }
+
     .open {
         @apply bg-slate-200 dark:bg-zinc-800
     }
+
     .close {
         @apply bg-slate-400 dark:bg-slate-700 shadow-light dark:shadow-dark
     }
+
     .bomb {
         @apply bg-red-400 dark:bg-red-900 shadow-light
     }
 
-    .input {
-        @apply dark:bg-neutral-900 dark:text-zinc-300 dark:border-neutral-700 dark:focus:ring-emerald-700 dark:focus:border-emerald-700 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-emerald-500 focus:border-emerald-500 focus-visible:outline-0 block w-full p-2.5
-    }
-    .input-label {
-        @apply dark:text-zinc-300 block mb-2 text-sm font-medium text-gray-900
-    }
     .input-wrong {
         @apply dark:text-red-700 mt-1 text-sm text-red-600 h-5
     }
+
+    .toggle-switch {
+        @apply relative w-12 h-6
+    }
+    .switch-label {
+        @apply absolute w-full h-6 bg-zinc-800 cursor-pointer border-2 border-solid border-zinc-800 rounded-xl
+    }
+    .checkbox {
+        @apply absolute hidden
+    }
+
+    .slider{
+        @apply absolute w-full h-full rounded-xl transition-all
+        before:absolute before:top-1 before:left-1 before:w-3 before:h-3 before:rounded-full before:bg-zinc-800 before:transition-all before:shadow-switch
+    }
+
+    .checkbox:checked ~ .slider {
+        @apply bg-blue-50 before:bg-black before:shadow-none before:translate-x-6
+    }
 }
+
+
+

@@ -1,19 +1,19 @@
 import { Reducer } from 'react';
 import { GameAction, GameInitialState, GameTypes } from './type.ts';
-import { copyGameFields } from '../../../helpers/copy-fields.helper.ts';
-import { initialMoveAlgorithm } from '../../../algorithms/initial-move.algorithm.ts';
-import { stepAlgorithm } from '../../../algorithms/step.algorithm.ts';
-import { GameStatus } from '../../../enums/game-status.enum.ts';
+import { copyGameFields } from 'helpers/copy-fields.helper.ts';
+import { initialMoveAlgorithm } from 'algorithms/initial-move.algorithm.ts';
+import { stepAlgorithm } from 'algorithms/step.algorithm.ts';
+import { GameStatus } from 'enums/game-status.enum.ts';
 import { DEFAULT_FIELD, DEFAULT_SETTINGS, GAME_SETTINGS } from '../../../constants/game.constant.ts';
-import { createMapByParams } from '../../../helpers/create-map.helper.ts';
+import { createMapByParams } from 'helpers/create-map.helper.ts';
 
 export const initialState: GameInitialState = {
   firstStep: true,
-  gameStatus: GameStatus.PROCESS,
+  gameStatus: GameStatus.START,
   checkedBomb: 20,
   checkedBombTrue: 20,
   gameFields: [],
-  settings: JSON.parse(localStorage.getItem(GAME_SETTINGS) || 'null') || DEFAULT_SETTINGS
+  settings: { ...DEFAULT_SETTINGS, ...JSON.parse(localStorage.getItem(GAME_SETTINGS) || '{}') }
 };
 
 export const reducer: Reducer<GameInitialState, GameAction> = (state, { payload, type }) => {
@@ -36,15 +36,14 @@ export const reducer: Reducer<GameInitialState, GameAction> = (state, { payload,
   }
 
   if (type === GameTypes.OPEN_BOX) {
-    const { matrix, startOrStopWatch } = payload;
     try {
       if (state.firstStep) {
-        startOrStopWatch(true);
         return {
           ...state,
           firstStep: false,
+          gameStatus: GameStatus.PROCESS,
           gameFields: initialMoveAlgorithm({
-            ...matrix, gameFields: state.gameFields, setting: state.settings
+            ...payload, gameFields: state.gameFields, setting: state.settings
           })
         };
       }
@@ -52,20 +51,17 @@ export const reducer: Reducer<GameInitialState, GameAction> = (state, { payload,
       return {
         ...state,
         gameFields: stepAlgorithm({
-          ...matrix,
+          ...payload,
           gameFields: state.gameFields,
           setting: state.settings
         })
       };
     } catch (e) {
-      startOrStopWatch(false);
       return { ...state, gameStatus: GameStatus.FALL };
     }
   }
 
   if (type === GameTypes.WIN_GAME) {
-    const { startOrStopWatch } = payload;
-    startOrStopWatch(false);
     return {
       ...state,
       gameStatus: GameStatus.WIN,
@@ -80,7 +76,7 @@ export const reducer: Reducer<GameInitialState, GameAction> = (state, { payload,
     return {
       ...state,
       firstStep: true,
-      gameStatus: GameStatus.PROCESS,
+      gameStatus: GameStatus.START,
       checkedBomb: state.settings.bombs,
       checkedBombTrue: state.settings.bombs,
       gameFields: state.gameFields.map((columns) =>
@@ -96,7 +92,7 @@ export const reducer: Reducer<GameInitialState, GameAction> = (state, { payload,
       ...state,
       settings: payload,
       firstStep: true,
-      gameStatus: GameStatus.PROCESS,
+      gameStatus: GameStatus.START,
       checkedBomb: payload.bombs,
       checkedBombTrue: payload.bombs,
       gameFields: createMapByParams(payload.rows, payload.columns)
@@ -108,7 +104,7 @@ export const reducer: Reducer<GameInitialState, GameAction> = (state, { payload,
     return {
       ...state,
       firstStep: true,
-      gameStatus: GameStatus.PROCESS,
+      gameStatus: GameStatus.START,
       checkedBomb: state.settings.bombs,
       checkedBombTrue: state.settings.bombs,
       gameFields: createMapByParams(state.settings.rows, state.settings.columns)
