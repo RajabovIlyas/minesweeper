@@ -28,28 +28,28 @@ export interface SetFlagAction {
 
 export interface OpenBoxAction {
   type: GameTypes.OPEN_BOX;
-  payload: { matrix: Matrix, startOrStopWatch: (value: boolean) => void };
+  payload: Matrix;
 
 }
 
 export interface WinGameAction {
   type: GameTypes.WIN_GAME;
-  payload: { startOrStopWatch: (value: boolean) => void },
+  payload?: null;
 }
 
 export interface RestartGameAction {
   type: GameTypes.RESTART_GAME;
-  payload?: null,
+  payload?: null;
 }
 
 export interface CreateMapAction {
   type: GameTypes.CREATE_MAP;
-  payload?: null,
+  payload?: null;
 }
 
 export interface UpdateSettingAction {
   type: GameTypes.UPDATE_SETTING;
-  payload: SettingModel,
+  payload: SettingModel;
 }
 
 export type GameAction =

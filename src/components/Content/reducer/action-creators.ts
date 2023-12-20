@@ -6,25 +6,19 @@ import { SettingModel } from '../../../models/setting.model.ts';
 export const gameActionCreators = (dispatch: Dispatch<GameAction>) => {
   return {
     onSetFlag: (data: Matrix) => dispatch({ payload: data, type: GameTypes.SET_FLAG }),
-    onOpenBox: (startOrStopWatch: (value: boolean) => void) =>
-      (matrix: Matrix) =>
-        dispatch({ payload: { matrix, startOrStopWatch }, type: GameTypes.OPEN_BOX }),
-    newGameFields: (resetStopWatch: () => void) =>
-      () => {
-        resetStopWatch();
+    onOpenBox: (matrix: Matrix) =>
+        dispatch({ payload: matrix, type: GameTypes.OPEN_BOX }),
+    newGameFields: () => {
         dispatch({ type: GameTypes.CREATE_MAP });
       },
-    winGame: (remainingBombs: number, startOrStopWatch: (value: boolean)=> void) =>
+    winGame: (remainingBombs: number) =>
       remainingBombs === 0 &&
-      dispatch({ type: GameTypes.WIN_GAME, payload: { startOrStopWatch } }),
-    onRestart: (resetStopWatch: () => void) =>
-      () => {
-        resetStopWatch();
+      dispatch({ type: GameTypes.WIN_GAME }),
+    onRestart: () => {
         dispatch({ type: GameTypes.RESTART_GAME });
       },
-    updateSetting: (resetStopWatch: () => void) =>
+    updateSetting:
       (data: SettingModel) => {
-        resetStopWatch();
         dispatch({ type: GameTypes.UPDATE_SETTING, payload: data });
       }
   };

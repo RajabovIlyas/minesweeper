@@ -21,5 +21,5 @@ export const useStopwatch = () => {
     setIsRunning(false)
     setTime(0);
   };
-  return {resetStopWatch, startOrStopWatch, seconds};
+  return {resetStopWatch, startOrStopWatch, seconds, isRunning};
 };
