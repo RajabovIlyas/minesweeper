@@ -23,7 +23,7 @@ const StopWatch:FC<StopWatchProps> = memo(({gameStatus}) => {
     }
   }, [gameStatus])
 
-  return(<h2>{showNumber(seconds)}</h2>)
+  return(<h2 className="w-12 text-center">{showNumber(seconds)}</h2>)
 })
 
 export default StopWatch

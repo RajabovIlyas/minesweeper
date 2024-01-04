@@ -31,6 +31,10 @@ const Header: FC<HeaderProps> = memo<HeaderProps>(({
     setShowWindow(false);
     updateSetting(data);
   };
+
+  const onClose = () => {
+    setShowWindow(false);
+  };
   const onOpenWindow = () => {
     setShowWindow(true);
   };
@@ -39,7 +43,7 @@ const Header: FC<HeaderProps> = memo<HeaderProps>(({
   return (
     <>
       <div className='header'>
-        <div className='flex gap-2'>
+        <div className='w-24 flex gap-2'>
           <button onClick={onOpenWindow}>
             <svg className='button-img' xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24'
                  strokeWidth='1.5'
@@ -52,13 +56,13 @@ const Header: FC<HeaderProps> = memo<HeaderProps>(({
           <ThemeSwitch />
         </div>
         <div className='game-status'>
-          <h2>{showNumber(checkedBomb)}</h2>
+          <h2 className='w-12 text-center'>{showNumber(checkedBomb)}</h2>
           <PlayButton gameStatus={gameStatus} onRestart={onRestart} />
           <StopWatch gameStatus={gameStatus} />
         </div>
-        <div className='w-11' />
+        <div className='w-24' />
       </div>
-      <Modal saveId={formId} setShowModal={setShowWindow} showModal={showWindow}>
+      <Modal saveId={formId} onClose={onClose} showModal={showWindow}>
         <Setting formId={formId} onSave={onSave} gameSettings={gameSettings} />
       </Modal>
     </>

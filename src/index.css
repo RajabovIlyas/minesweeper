@@ -16,6 +16,10 @@
         @apply dark:bg-zinc-900 bg-blue-50
     }
 
+    canvas {
+        @apply z-10 block absolute top-0 left-0
+    }
+
     p {
         @apply font-extrabold font-mono
     }
@@ -87,7 +91,7 @@
 
 @layer components {
     .header {
-        @apply flex gap-3 justify-between items-center w-full
+        @apply z-20 flex gap-3 justify-between items-center w-full
     }
 
     .game-status {
@@ -95,11 +99,11 @@
     }
 
     .game-content {
-        @apply p-5 flex flex-col justify-items-center w-full min-h-screen flex-wrap mx-auto
+        @apply relative p-5 flex flex-col justify-items-center w-full min-h-screen flex-wrap mx-auto
     }
 
     .game-map {
-        @apply flex flex-col gap-0.5
+        @apply z-0 flex flex-col gap-0.5
     }
 
     .game-map_column {
@@ -137,14 +141,16 @@
     .toggle-switch {
         @apply relative w-12 h-6
     }
+
     .switch-label {
         @apply absolute w-full h-6 bg-zinc-800 cursor-pointer border-2 border-solid border-zinc-800 rounded-xl
     }
+
     .checkbox {
         @apply absolute hidden
     }
 
-    .slider{
+    .slider {
         @apply absolute w-full h-full rounded-xl transition-all
         before:absolute before:top-1 before:left-1 before:w-3 before:h-3 before:rounded-full before:bg-zinc-800 before:transition-all before:shadow-switch
     }
@@ -153,6 +159,3 @@
         @apply bg-blue-50 before:bg-black before:shadow-none before:translate-x-6
     }
 }
-
-
-
