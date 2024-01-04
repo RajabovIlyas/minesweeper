@@ -6,12 +6,11 @@ export const useStopwatch = () => {
   useEffect(() => {
     let intervalId: number;
     if (isRunning) {
-      intervalId = Number(setInterval(() => setTime(time + 1), 10));
+      intervalId = Number(setInterval(() => setTime(time + 1), 1000));
     }
     return () => clearInterval(intervalId);
   }, [isRunning, time]);
 
-  const seconds = Math.floor(time  / 100);
 
   const startOrStopWatch = (value: boolean) => {
     setIsRunning(value);
@@ -21,5 +20,5 @@ export const useStopwatch = () => {
     setIsRunning(false)
     setTime(0);
   };
-  return {resetStopWatch, startOrStopWatch, seconds, isRunning};
+  return {resetStopWatch, startOrStopWatch, seconds: time, isRunning};
 };
