@@ -1,4 +1,4 @@
-import { GameStatus } from '../../../enums/game-status.enum.ts';
+import { GameStatus } from 'enums/game-status.enum.ts';
 import { FC, memo } from 'react';
 
 interface PlayButtonProps {

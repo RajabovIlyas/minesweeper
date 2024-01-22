@@ -1,29 +1,24 @@
 import PlayButton from './PlayButton/PlayButton.tsx';
-import { GameStatus } from '../../enums/game-status.enum.ts';
 import { FC, memo, useId, useState } from 'react';
 import Modal from '../Modal/Modal.tsx';
 import Setting from '../Setting/Setting.tsx';
-import { SettingModel } from '../../models/setting.model.ts';
-import { showNumber } from '../../helpers/show-number.helper.ts';
+import { SettingModel } from 'models/setting.model.ts';
+import { showNumber } from 'helpers/show-number.helper.ts';
 import ThemeSwitch from './ThemeSwitch/ThemeSwitch.tsx';
 import StopWatch from './StopWatch/StopWatch.tsx';
-
-interface HeaderProps {
-  checkedBomb: number;
-  gameStatus: GameStatus;
-  onRestart: () => void;
-  updateSetting: (data: SettingModel) => void;
-  gameSettings: SettingModel;
-}
+import { useHeader } from './header.hook.ts';
 
 
-const Header: FC<HeaderProps> = memo<HeaderProps>(({
-                                                     checkedBomb,
-                                                     gameStatus,
-                                                     onRestart,
-                                                     updateSetting,
-                                                     gameSettings
-                                                   }) => {
+
+
+const Header: FC = memo(() => {
+  const {
+    checkedBomb,
+    gameStatus,
+    restartGame,
+    updateSetting,
+    settings
+  } = useHeader()
   const formId = useId();
   const [showWindow, setShowWindow] = useState(false);
 
@@ -57,19 +52,16 @@ const Header: FC<HeaderProps> = memo<HeaderProps>(({
         </div>
         <div className='game-status'>
           <h2 className='w-12 text-center'>{showNumber(checkedBomb)}</h2>
-          <PlayButton gameStatus={gameStatus} onRestart={onRestart} />
+          <PlayButton gameStatus={gameStatus} onRestart={restartGame} />
           <StopWatch gameStatus={gameStatus} />
         </div>
         <div className='w-24' />
       </div>
       <Modal saveId={formId} onClose={onClose} showModal={showWindow}>
-        <Setting formId={formId} onSave={onSave} gameSettings={gameSettings} />
+        <Setting formId={formId} onSave={onSave} gameSettings={settings} />
       </Modal>
     </>
   );
-}, (prevProps, nextProps) =>
-  prevProps.gameStatus === nextProps.gameStatus &&
-  prevProps.checkedBomb === nextProps.checkedBomb &&
-  JSON.stringify(prevProps.gameSettings) === JSON.stringify(nextProps.gameSettings));
+});
 
 export default Header;

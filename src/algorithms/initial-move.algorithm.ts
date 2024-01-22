@@ -3,7 +3,7 @@ import { openBox } from 'algorithms/step.algorithm.ts';
 import { CellModel } from 'models/cell.model.ts';
 import { copyGameFields } from 'helpers/copy-fields.helper.ts';
 import { randomCountHelper } from 'helpers/random-count.helper.ts';
-import { SettingModel } from '../models/setting.model.ts';
+import { SettingModel } from 'models/setting.model.ts';
 
 
 interface BombProps extends Matrix {

@@ -12,7 +12,8 @@
       "models": ["./models/*"],
       "algorithms": ["./algorithms/*"],
       "components": ["./components/*"],
-      "enums": ["./enums/*"]
+      "enums": ["./enums/*"],
+      "store": ["./store/*"]
     },
 
     /* Bundler mode */
