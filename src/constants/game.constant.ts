@@ -1,5 +1,5 @@
 import { CellModel } from 'models/cell.model.ts';
-import { SettingModel } from '../models/setting.model.ts';
+import { SettingModel } from 'models/setting.model.ts';
 
 export const GAME_SETTINGS = 'GAME_SETTINGS';
 export const COUNT_BOMBS = 20;

@@ -3,7 +3,7 @@ import { GAME_OVER } from 'constants/error.constant.ts';
 import { ONE, ZERO } from 'constants/number.constant.ts';
 import { Matrix } from 'models/matrix.model.ts';
 import { copyGameFields } from 'helpers/copy-fields.helper.ts';
-import { SettingModel } from '../models/setting.model.ts';
+import { SettingModel } from 'models/setting.model.ts';
 
 interface Props extends Matrix {
   gameFields: CellModel[][];

@@ -1,15 +1,13 @@
 import { FC, memo } from 'react';
-import { GameStatus } from '../../enums/game-status.enum.ts';
+import { GameStatus } from 'enums/game-status.enum.ts';
+import { useWinGame } from './winGame.hook.ts';
 
-interface WinGameProps {
-  gameStatus: GameStatus;
-  onRestart: () => void;
-}
 
-const WinGame: FC<WinGameProps> = memo<WinGameProps>(({ gameStatus, onRestart }) => {
 
+const WinGame: FC = memo(() => {
+  const { gameStatus, restartGame } = useWinGame();
   const onClose = () => {
-    onRestart();
+    restartGame();
   };
 
 
@@ -36,6 +34,6 @@ const WinGame: FC<WinGameProps> = memo<WinGameProps>(({ gameStatus, onRestart })
       </div>
     </div>
   );
-}, (prevProps, nextProps) => prevProps.gameStatus === nextProps.gameStatus);
+});
 
 export default WinGame;

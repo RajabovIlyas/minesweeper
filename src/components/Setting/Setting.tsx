@@ -1,6 +1,6 @@
 import { FC } from 'react';
 import { useFormSetting } from './form-setting.hook.ts';
-import { SettingModel } from '../../models/setting.model.ts';
+import { SettingModel } from 'models/setting.model.ts';
 
 interface SettingProps {
   onSave: (data: SettingModel) => void;

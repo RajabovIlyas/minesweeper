@@ -1,14 +1,14 @@
 import { FC, memo, useEffect, useRef } from 'react';
 import { Fireworks } from './firework.canvas.ts';
-import { GameStatus } from '../../enums/game-status.enum.ts';
+import { GameStatus } from 'enums/game-status.enum.ts';
+import { useFirework } from './firework.hook.ts';
 
-interface FireworkProps {
-  gameStatus: GameStatus
-}
 
-const Firework:FC<FireworkProps> = memo(({gameStatus}) => {
+
+const Firework:FC = memo(() => {
   const ref = useRef(null);
   const firework = new Fireworks(ref);
+  const { gameStatus } = useFirework();
 
 
   useEffect(() => {
