@@ -1,7 +1,7 @@
 import { useStopwatch } from './stopwatch.hook.ts';
 import { FC, memo, useEffect } from 'react';
-import { GameStatus } from '../../../enums/game-status.enum.ts';
-import { showNumber } from '../../../helpers/show-number.helper.ts';
+import { GameStatus } from 'enums/game-status.enum.ts';
+import { showNumber } from 'helpers/show-number.helper.ts';
 
 interface StopWatchProps{
   gameStatus: GameStatus

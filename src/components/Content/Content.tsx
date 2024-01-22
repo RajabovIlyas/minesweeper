@@ -1,38 +1,36 @@
 import { FC } from 'react';
 import Box from 'components/Box/Box.tsx';
-import { useGameMapHook } from './hooks';
 import Header from '../Header/Header.tsx';
 import Firework from '../Firework/Firework.tsx';
 import WinGame from '../WinGame/WinGame.tsx';
+import { useGameStore } from './content.hook.ts';
 
 const Content: FC = () => {
   const {
     gameStatus,
     gameFields,
-    settings,
-    onSetFlag,
-    onOpenBox,
-    updateSetting,
+    changeFlag,
+    openBox,
     closeContextMenu,
-    onRestart,
-    ...headerProps
-  } = useGameMapHook();
+  } = useGameStore();
+
+
   return (
     <>
-      <Firework gameStatus={gameStatus} />
-      <WinGame gameStatus={gameStatus} onRestart={onRestart}/>
+      <Firework />
+      <WinGame/>
       <div className='game-content'
            onContextMenu={closeContextMenu}>
-        <Header {...headerProps} onRestart={onRestart} gameStatus={gameStatus} updateSetting={updateSetting} gameSettings={settings} />
+        <Header/>
         <div className='game-map'>
-          {gameFields.map((fields, x) => (
+          {Array.isArray(gameFields) && gameFields.map((fields, x) => (
             <div key={fields?.[0].id} className='game-map_column'>
-              {fields.map(({ id, ...field }, y) =>
+              {Array.isArray(fields) && fields.map(({ id, ...field }, y) =>
                 <Box {...field}
                      key={id}
                      gameStatus={gameStatus}
-                     onSetFlag={onSetFlag}
-                     onOpenBox={onOpenBox} x={x}
+                     onSetFlag={changeFlag}
+                     onOpenBox={openBox} x={x}
                      y={y} />)}
             </div>
           ))}

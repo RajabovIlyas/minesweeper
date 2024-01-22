@@ -1,6 +1,6 @@
 import { memo, useEffect, useState } from 'react';
-import { GameTheme } from '../../../enums/game-theme.enum.ts';
-import { defaultTheme, insertTheme } from '../../../helpers/theme.helper.ts';
+import { GameTheme } from 'enums/game-theme.enum.ts';
+import { defaultTheme, insertTheme } from 'helpers/theme.helper.ts';
 
 const ThemeSwitch = memo(() => {
   const [theme, setTheme] = useState<GameTheme>(defaultTheme());

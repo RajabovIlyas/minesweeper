@@ -1,4 +1,4 @@
-import { GameTheme } from '../enums/game-theme.enum.ts';
+import { GameTheme } from 'enums/game-theme.enum.ts';
 
 export const insertTheme = (theme?: GameTheme) => {
 

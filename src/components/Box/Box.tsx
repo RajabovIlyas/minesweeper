@@ -1,7 +1,7 @@
 import { FC, memo, MouseEvent } from 'react';
 import { CellModel } from 'models/cell.model.ts';
 import { Matrix } from 'models/matrix.model.ts';
-import { GameStatus } from '../../enums/game-status.enum.ts';
+import { GameStatus } from 'enums/game-status.enum.ts';
 
 interface BoxProps extends Omit<CellModel, 'id'> {
   onOpenBox: (props: Matrix) => void;

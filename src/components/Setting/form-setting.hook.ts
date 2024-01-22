@@ -1,8 +1,8 @@
 import * as yup from 'yup';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { SettingModel } from '../../models/setting.model.ts';
-import { GAME_SETTINGS } from '../../constants/game.constant.ts';
+import { SettingModel } from 'models/setting.model.ts';
+import { GAME_SETTINGS } from 'constants/game.constant.ts';
 
 interface SettingFormProps {
   onSave: (data: SettingModel) => void;
