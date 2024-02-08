@@ -23,7 +23,7 @@ const Setting: FC<SettingProps> = ({ formId, ...props }) => {
         <div>
           <label htmlFor='rows'
                  className='input-label'>
-            Rows
+            Columns
           </label>
           <input  {...register('rows')}
                   type='number' />
@@ -32,7 +32,7 @@ const Setting: FC<SettingProps> = ({ formId, ...props }) => {
         <div>
           <label htmlFor='columns'
                  className='input-label'>
-            Columns
+            Rows
           </label>
           <input {...register('columns')}
                  type='number' />
