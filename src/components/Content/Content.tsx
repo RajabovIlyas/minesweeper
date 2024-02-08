@@ -4,6 +4,7 @@ import Header from '../Header/Header.tsx';
 import Firework from '../Firework/Firework.tsx';
 import WinGame from '../WinGame/WinGame.tsx';
 import { useGameStore } from './content.hook.ts';
+import Footer from '../Footer/Footer.tsx';
 
 const Content: FC = () => {
   const {
@@ -11,30 +12,35 @@ const Content: FC = () => {
     gameFields,
     changeFlag,
     openBox,
-    closeContextMenu,
+    closeContextMenu
   } = useGameStore();
 
 
   return (
     <>
       <Firework />
-      <WinGame/>
+      <WinGame />
       <div className='game-content'
            onContextMenu={closeContextMenu}>
-        <Header/>
+        <Header />
         <div className='game-map'>
-          {Array.isArray(gameFields) && gameFields.map((fields, x) => (
-            <div key={fields?.[0].id} className='game-map_column'>
-              {Array.isArray(fields) && fields.map(({ id, ...field }, y) =>
-                <Box {...field}
-                     key={id}
-                     gameStatus={gameStatus}
-                     onSetFlag={changeFlag}
-                     onOpenBox={openBox} x={x}
-                     y={y} />)}
+          <div className='game-map-scroll'>
+            <div className='flex'>
+            {Array.isArray(gameFields) && gameFields.map((fields, x) => (
+              <div key={fields?.[0].id} className='game-map_column'>
+                {Array.isArray(fields) && fields.map(({ id, ...field }, y) =>
+                  <Box {...field}
+                       key={id}
+                       gameStatus={gameStatus}
+                       onSetFlag={changeFlag}
+                       onOpenBox={openBox} x={x}
+                       y={y} />)}
+              </div>
+            ))}
             </div>
-          ))}
+          </div>
         </div>
+        <Footer/>
       </div>
     </>
   );
