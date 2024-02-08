@@ -43,9 +43,7 @@ export const useGameState = create<GameState>((set) => ({
   settings: { ...DEFAULT_SETTINGS, ...JSON.parse(localStorage.getItem(GAME_SETTINGS) || '{}') },
 
   changeFlag: (matrix: Matrix) => {
-
     const { x, y } = matrix;
-
     set((state: GameState) => {
       const { gameFields, checkedBombTrue, checkedBomb } = state;
       const newState: Partial<GameInitialState> = {};
@@ -66,7 +64,6 @@ export const useGameState = create<GameState>((set) => ({
   },
 
   openBox: (matrix: Matrix) => {
-
     set((state:GameState) => {
       try {
         if (state.firstStep) {
