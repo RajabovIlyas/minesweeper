@@ -20,7 +20,7 @@ const Content: FC = () => {
     <>
       <Firework />
       <WinGame />
-      <div className='game-content'
+      <div className='game-content min-h-screen'
            onContextMenu={closeContextMenu}>
         <Header />
         <div className='game-map'>
