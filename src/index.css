@@ -112,7 +112,7 @@
     }
 
     .game-map-scroll{
-        @apply object-cover overflow-x-auto overflow-y-auto whitespace-nowrap  max-h-[80lvh]
+        @apply object-cover overflow-x-auto overflow-y-auto whitespace-nowrap  max-h-[calc(100vh-11rem)]
     }
 
     .game-map_column {
