@@ -1,10 +1,13 @@
 import { FC, memo } from 'react';
 import { GameStatus } from 'enums/game-status.enum.ts';
-import { useWinGame } from './winGame.hook.ts';
+import { useWinGame } from './endGame.hook.ts';
 
+const GAME_FINISH_MASSAGE = {
+  [GameStatus.FALL]: 'Game Over',
+  [GameStatus.WIN]: 'You won'
+};
 
-
-const WinGame: FC = memo(() => {
+const EndGame: FC = memo(() => {
   const { gameStatus, restartGame } = useWinGame();
   const onClose = () => {
     restartGame();
@@ -21,7 +24,7 @@ const WinGame: FC = memo(() => {
           <div
             className='dark:bg-neutral-800 flex flex-col items-center justify-between gap-5 p-5 rounded-t'>
             <h1 className='dark:text-zinc-300 text-3xl font-semibold'>
-              Game Over
+              {GAME_FINISH_MASSAGE[gameStatus]}
             </h1>
             <button
               className='dark:bg-emerald-700 max-w-full bg-emerald-500 text-white active:bg-emerald-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none ease-linear transition-all duration-150'
@@ -36,4 +39,4 @@ const WinGame: FC = memo(() => {
   );
 });
 
-export default WinGame;
+export default EndGame;
