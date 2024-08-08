@@ -17,10 +17,10 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
       - name: Install modules
-        run: yarn install
+        run: pnpm install
 
       - name: Check build
-        run: yarn build
+        run: pnpm build
 
   test:
     needs: [build]
@@ -35,20 +35,24 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node-version }}
+      - name: Install pnpm
+      - uses: pnpm/action-setup@v4
       - name: Install modules
-        run: yarn install
+        run: pnpm install
 
       - name: Run tests
-        run: yarn test
+        run: pnpm test
 
   lint:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+      - name: Install pnpm
+      - uses: pnpm/action-setup@v4
 
       - name: Install modules
-        run: yarn install
+        run: pnpm install
 
       - name: Eslint
-        run: yarn lint
+        run: pnpm lint
