@@ -24,7 +24,7 @@ const Content: FC = () => {
       <div className='game-content min-h-screen'
            onContextMenu={closeContextMenu}>
         <Header />
-        <div className='game-map'>
+        <div className={`game-map ${gameStatus === GameStatus.FALL ? 'animate-shake' : ''}`}>
           <div className='game-map-scroll'>
             <div className='flex'>
               {Array.isArray(gameFields) && gameFields.map((fields, x) => (
