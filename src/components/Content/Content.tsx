@@ -1,10 +1,11 @@
 import { FC } from 'react';
 import Box from 'components/Box/Box.tsx';
 import Header from '../Header/Header.tsx';
-import Firework from '../Firework/Firework.tsx';
 import WinGame from '../WinGame/WinGame.tsx';
 import { useGameStore } from './content.hook.ts';
 import Footer from '../Footer/Footer.tsx';
+import Confetti from '../Confetti/Confetti.tsx';
+import { GameStatus } from '../../enums/game-status.enum.ts';
 
 const Content: FC = () => {
   const {
@@ -18,7 +19,7 @@ const Content: FC = () => {
 
   return (
     <>
-      <Firework />
+      {gameStatus === GameStatus.WIN && <Confetti/>}
       <WinGame />
       <div className='game-content min-h-screen'
            onContextMenu={closeContextMenu}>
