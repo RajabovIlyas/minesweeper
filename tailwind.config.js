@@ -1,4 +1,5 @@
 import plugin from 'tailwindcss';
+import { GameStatus } from './src/enums/game-status.enum.js';
 
 /** @type {import('tailwindcss').Config} */
 export default {
@@ -21,4 +22,3 @@ export default {
   },
   plugins: [],
 }
-
