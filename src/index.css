@@ -120,7 +120,7 @@
     }
 
     .box {
-        @apply my-0.5 flex justify-center items-center rounded-lg w-7 h-7 transition-colors duration-100;
+        @apply cursor-pointer my-1 mx-0.5 flex justify-center items-center rounded-sm w-7 h-7 transition-colors duration-100;
     }
 
     .box-img {
